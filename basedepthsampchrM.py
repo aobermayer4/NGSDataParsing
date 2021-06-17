@@ -6,7 +6,7 @@ import numpy as np
 
 ## how to use script
 if len(sys.argv)<5:
-	print('Usage: basescovered.py /path/to/bam/files/ ref.fa bamfilelist.txt depthdict10.txt depthdict5.txt')
+	print('Usage: basescovered.py /path/to/bam/files/ ref.fai bamfilelist.txt depthdict10.txt depthdict5.txt')
 	sys.exit()
 else:
 	bampath=sys.argv[1]
