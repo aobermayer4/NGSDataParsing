@@ -41,13 +41,13 @@ covlistall=[]
 # for loop to go through .bam files
 for file in bamfiles:
 	covlist=[]
-	bamf=pysam.AlignmentFile(file, 'rb') #opens .bam for reading
-	for pilecol in bamf.pileup('MT'):    #pileup function
-		covlist.append(pilecol.n)        #extracts coverage to temp list
-		covlistall.append(pilecol.n)     #extracts coverage to full list
-	for i in covlist:                    #check for positions by read depth
+	bamf=pysam.AlignmentFile(file, 'rb')                    #opens .bam for reading
+	for pilecol in bamf.pileup('MT', FastaFile=reffile):    #pileup function
+		covlist.append(pilecol.n)                           #extracts coverage to temp list
+		covlistall.append(pilecol.n)                        #extracts coverage to full list
+	for i in covlist:                                       #check for positions by read depth
 		postot+=1
-		if postot%100==0:                #status message while reading files
+		if postot%100==0:                                   #status message while reading files
 				status=str(postot)+' bases checked'
 				sys.stderr.write(status+'\r')
 		if i >= 10:
