@@ -6,20 +6,20 @@ import numpy as np
 
 ## how to use script
 if len(sys.argv)<6:
-	print('Usage: basescovered.py /path/to/bam/files/ ref.fai bamfilelist.txt depthdict>10.txt depthdict>5.txt')
+	print('Usage: basescovered.py /path/to/bam/files/ ref.fai bamfilelist.txt depthdict>5.txt depthdict>10.txt')
 	sys.exit()
 else:
 	bampath=sys.argv[1]
 	reffile=sys.argv[2]
 	bamfilelist=sys.argv[3]
-	depthdict10=sys.argv[4]
-	depthdict5=sys.argv[5]
+	depthfile5=sys.argv[4]
+	depthfile10=sys.argv[5]
 
 ## open files
 reffile=open(reffile, 'r')
 bamfilelist=open(bamfilelist, 'w')
-depthdict10=open(depthdict10, 'w')
-depthdict5=open(depthdict5, 'w')
+depthfile5=open(depthfile5, 'w')
+depthfile10=open(depthfile10, 'w')
 
 ## scan directory for .bam files and add filenames to list
 # blank list to hold names
@@ -42,8 +42,8 @@ posgt10=0
 posgt5=0
 postot=0
 covlistall=[] #contains all read depths 1>=
-dpdict10={}   #blank depth dictionary
-dpdict5={}   #blank depth dictionary
+dp5array=np.array(['Sample','DepthFraction','MeanDepth','MedianDepth']) #blank np array
+dp10array=np.array(['Sample','DepthFraction','MeanDepth','MedianDepth']) #blank np array
 # for loop to go through .bam files
 for file in bamfiles:
 	covlist=[] #temp depth list
@@ -66,32 +66,30 @@ for file in bamfiles:
 		elif i >= 5:
 			posgt5+=1
 			posgt5temp+=1
-	#add to dict> bamfile: depth fraction, mean depth, median depth
-	dpdict10[file]=[(round((posgt10temp/16569),4)),(round((sum(covlist)/16569), 2)),(np.median(covlist))]
-	dpdict5[file]=[(round((posgt5temp/16569),4)),(round((sum(covlist)/16569), 2)),(np.median(covlist))]
+	depfr5=(round((posgt5temp/16569),4)) #depth fraction >5
+	depfr10=(round((posgt10temp/16569),4)) #depth fraction >10
+	meandep=(round((sum(covlist)/16569), 2)) #mean depth
+	meddep=(np.median(covlist)) #median depth
+	#add to depth array
+	dp5array=np.vstack((dp5array,[file,depfr5,meandep,meddep]))
+	dp10array=np.vstack((dp10array,[file,depfr10,meandep,meddep]))
 	bamf.close() #close bam file
-# write depth dictionary to outfile
-for key, value in dpdict10.items():
-	depthdict10.write('%s\t%s\n' % (key, value))
-for key, value in dpdict5.items():
-	depthdict5.write('%s\t%s\n' % (key, value))
+
+## save numpy array to outfile
+np.savetxt(depthfile5, dp5array, fmt='%s', delimiter='\t')
+np.savetxt(depthfile10, dp10array, fmt='%s', delimiter='\t')
 
 ## find fraction of read depths >5 and >10
-# this is out of positions with depth 1>
-dpfr5=round((posgt5/postot), 4)
-dpfr10=round((posgt10/postot), 4)
-# this is with all positions sequenced
-dpfr5t=round((posgt5/(16569*bamnum)), 4)
-dpfr10t=round((posgt10/(16569*bamnum)), 4)
+dpfr5t=round((posgt5/posmt), 4)
+dpfr10t=round((posgt10/posmt), 4)
 
 ## close files
 reffile.close()
 bamfilelist.close()
-depthdict10.close()
-depthdict5.close()
+depthfile5.close()
+depthfile10.close()
 
 ## write outcome in console
-# number of bases out of bases read
 # number of bases out of bases total
 print(str(posgt10)+' bases with read depth greater than 10 out of '+str(posmt)+' bases read')
 print(str(posgt5)+' bases with read depth greater than 5 out of '+str(posmt)+' bases read')
@@ -99,6 +97,5 @@ print(str(posgt5)+' bases with read depth greater than 5 out of '+str(posmt)+' b
 print(str(dpfr5t)+' = Fraction of bases covered with a read depth greater than 5 out of '+str(posmt)+' bases read')
 print(str(dpfr10t)+' = Fraction of bases covered with a read depth greater than 10 out of '+str(posmt)+' bases read')
 # mean/median depth
-print(str(round((sum(covlistall)/postot), 2))+' average read depth not counting zeros')
-print(str(round((sum(covlistall)/posmt), 2))+' average read depth counting zeros')
+print(str(round((sum(covlistall)/posmt), 2))+' average read depth')
 print(str(np.median(covlistall))+' meadian read depth not counting zeros')
