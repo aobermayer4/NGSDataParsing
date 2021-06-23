@@ -2,7 +2,7 @@
 
 **basescovered(S).py scripts:** These scripts are used in the directory of interest that contains the BAM and BAI files and run to gather read depth for the mitochindrial DNA. The resulting run gives you the fraction of reads greater than 5 or 10 depth as well as the average and median read depth. The script ending in 'S' is when the mitochondrial reads are labeled 'chrM' and the script without an 'S' is when the mitochondrial reads are labeled 'MT'.
 
-**basedepthsamp(MT or chrM):** These scripts are similar to above. You input /path/to/bam/files/ referenceFASTA.fai bamfilelist.txt depthdict10.txt depthdict5.txt. the bamfilelist will contain all bam files being ran. The depthdict files will be text files of two dictionaries containing read depth summaries of all the samples input. One showing fraction of read depths greater than 10 with mean and median per sample and the other with read depths greater than 5 per sample with mean and median.
+**basedepthsamp(MT or chrM):** These scripts are similar to above. You input /path/to/bam/files/ referenceFASTA.fai bamfilelist.txt depthdict10.txt depthdict5.txt. the bamfilelist will contain all bam files being ran. The depthdict files will be text files of two numpy arrays containing read depth summaries of all the samples input. One showing fraction of read depths greater than 10 with mean and median per sample and the other with read depths greater than 5 per sample with mean and median.
 
 **vcf_ChoiceSearch.py:** This is an interactive script that generates a list of specified variants. You may choose to extract SNPs, insertions, deletions, positions with more than one variation, or a total list. The output gives tab delimited list of: Chromosome, Position (start), Position (end), Alternate, ID.
 
