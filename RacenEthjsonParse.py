@@ -10,5 +10,10 @@ for i in data:
 	caseID = caseID[:-4]
 	race = i['demographic']['race']
 	ethnicity = i['demographic']['ethnicity']
-	status = i['demographic']['vital_status']
-	print('caseID:',caseID,'\n\trace:',race,'\n\tethnicity:',ethnicity,'\n\tvital_status:',status)
+	vitals = i['demographic']['vital_status']
+	smoker = i['demographic']['tobacco_smoking_status']
+	print('caseID:',caseID,
+		'\n\trace:',race,
+		'\n\tethnicity:',ethnicity,
+		'\n\tvital_status:',vitals,
+		'\n\tTobacco_Smoking_Status',smoker)
