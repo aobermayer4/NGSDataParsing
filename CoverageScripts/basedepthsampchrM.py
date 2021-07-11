@@ -91,8 +91,8 @@ depthfile10.close()
 
 ## write outcome in console
 # number of bases out of bases total
-print(str(posgt10)+' bases with read depth greater than 10 out of '+str(posmt)+' bases read')
 print(str(posgt5)+' bases with read depth greater than 5 out of '+str(posmt)+' bases read')
+print(str(posgt10)+' bases with read depth greater than 10 out of '+str(posmt)+' bases read')
 # fraction of bases total
 print(str(dpfr5t)+' = Fraction of bases covered with a read depth greater than 5 out of '+str(posmt)+' bases read')
 print(str(dpfr10t)+' = Fraction of bases covered with a read depth greater than 10 out of '+str(posmt)+' bases read')
