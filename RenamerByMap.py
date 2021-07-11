@@ -16,9 +16,9 @@ namemap=pd.read_csv(namemap, sep='\t', index_col=0)
 #spaces in header were manually taken out. Will be looking into coding that piece in.
 
 
-## will rename from deepst file out to folders in directory
-#  rename is based off of 'SampleID' and first character of 'SampleType' found in 'namemap' + ext's
-#  some 'SampleID's have 2 sample of the same type and are seperated by a comma and space.
+## will rename from deepest file out to folders in directory
+#  rename is based off of 'CaseID' and first character of 'SampleType' found in 'namemap' + ext's
+#  some 'CaseID's have 2 sample of the same type and are seperated by a comma and space.
 #  will look into aking the white space out.
 
 for folder in os.listdir(filepath) : #loop through given path for sub-directories
@@ -29,15 +29,15 @@ for folder in os.listdir(filepath) : #loop through given path for sub-directorie
 				ext='.'.join(ext) #join extensions
 				src=os.path.join(filepath, folder, file, file2) #old path to file
 				dst=os.path.join(filepath, folder, file, #new path to file
-					namemap.at[folder,'SampleID']+'_'+namemap.at[folder,'SampleType'][0]+'.'+str(ext))
+					namemap.at[folder,'CaseID']+'_'+namemap.at[folder,'SampleType'][0]+'.'+str(ext))
 				os.rename(src,dst) #rename function
 		else :
 			ext=file.split('.')[1:]
 			ext='.'.join(ext)
 			src=os.path.join(filepath, folder, file)
 			dst=os.path.join(filepath, folder,
-				namemap.at[folder,'SampleID']+'_'+namemap.at[folder,'SampleType'][0]+'.'+str(ext))
+				namemap.at[folder,'CaseID']+'_'+namemap.at[folder,'SampleType'][0]+'.'+str(ext))
 			os.rename(src,dst)
 	src=os.path.join(filepath, folder)
-	dst=os.path.join(filepath, namemap.at[folder,'SampleID']+'_'+namemap.at[folder,'SampleType'][0])
+	dst=os.path.join(filepath, namemap.at[folder,'CaseID']+'_'+namemap.at[folder,'SampleType'][0])
 	foldernew=os.rename(src, dst)
