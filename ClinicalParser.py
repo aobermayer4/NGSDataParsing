@@ -34,18 +34,3 @@ np.savetxt(clinout, clinical, fmt='%s', delimiter='\t')
 clinout.close()
 
 
-
-
-
-
-
-
-
-
-
-
-#	print('caseID:',caseID,
-#		'\n\trace:',race,
-#		'\n\tethnicity:',ethnicity,
-#		'\n\tvital_status:',vitals,
-#		'\n\tTobacco_Smoking_Status:',smoker)
