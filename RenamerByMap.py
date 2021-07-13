@@ -18,8 +18,6 @@ namemap=pd.read_csv(namemap, sep='\t', index_col=0)
 
 ## will rename from deepest file out to folders in directory
 #  rename is based off of 'CaseID' and first character of 'SampleType' found in 'namemap' + extensions
-#  some 'CaseID's have 2 sample of the same type and are seperated by a comma and space.
-#  will look into aking the white space out.
 
 for folder in os.listdir(filepath) : #loop through given path for sub-directories
 	for file in os.listdir(os.path.join(filepath, folder)) : #loop through folders for files/sub-dir
