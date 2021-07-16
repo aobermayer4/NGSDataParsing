@@ -26,12 +26,14 @@ depthfile10=open(depthfile10, 'w')
 bamfiles=[]
 bamnum=0
 # for every file in bam directory, add and append to list
-for file in os.listdir(bampath):
-	if os.path.isfile(os.path.join(bampath, file)): #reads files in bampath
-		if file.endswith('.bam'):                   #checks for .bam ending
-			bamfiles.append(file)                   #adds file to list
-			bamfilelist.write(file+'\n')            #write file to outfile
-			bamnum+=1
+for folder in os.listdir(bampath):
+	if os.path.isdir(os.path.join(bampath,folder)) == True:
+		for file in os.listdir(os.path.join(bampath,folder)):
+			if os.path.isfile(os.path.join(bampath,folder,file)) == True: #reads files in bampath
+				if file.endswith('.bam'): #checks for .bam ending
+					bamfiles.append(os.path.join(bampath,folder,file)) #adds file to list
+					bamfilelist.write(os.path.join(bampath,folder,file)+'\n') #write file to outfile
+		bamnum+=1
 
 ## Count total MT positions out of all samples
 posmt=(16569*bamnum)
