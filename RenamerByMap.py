@@ -13,38 +13,36 @@ else :
 
 ## make pandas df with namemap
 namemap=pd.read_csv(namemap, sep='\t', index_col=0)
-#spaces in header were manually taken out. Will be looking into coding that piece in.
-
 
 ## will rename from deepest file out to folders in directory
-#  rename is based off of 'CaseID' and first character of 'SampleType' found in 'namemap' + extensions
+#  rename is based off of 'Case ID' and first character of 'Sample Type' found in 'namemap' + extensions
 
 for folder in os.listdir(filepath) : #loop through given path for sub-directories
 	for file in os.listdir(os.path.join(filepath, folder)) : #loop through folders for files/sub-dir
 		if os.path.isdir(os.path.join(filepath, folder, file)) == True : #if sub-dir exists
 			for file2 in os.listdir(os.path.join(filepath,folder, file)) : #loop through sub-dir for files
-				ext=file2.split('.')[1:] #extraxt file extensions
+				ext=file2.split('.')[1:] #extract file extensions
 				ext='.'.join(ext) #join extensions
-				newID=namemap.at[folder,'CaseID']
+				newID=namemap.at[folder,'Case ID']
 				if ',' in newID :
 					newID=newID.split(',')[0]
 				src=os.path.join(filepath, folder, file, file2) #old path to file
 				dst=os.path.join(filepath, folder, file, #new path to file
-					newID+'_'+namemap.at[folder,'SampleType'][0]+'.'+str(ext))
+					newID+'_'+namemap.at[folder,'Sample Type'][0]+'.'+str(ext))
 				os.rename(src,dst) #rename function
 		else :
 			ext=file.split('.')[1:]
 			ext='.'.join(ext)
-			newID=namemap.at[folder,'CaseID']
+			newID=namemap.at[folder,'Case ID']
 			if ',' in newID :
 				newID=newID.split(',')[0]
 			src=os.path.join(filepath, folder, file)
 			dst=os.path.join(filepath, folder,
-				newID+'_'+namemap.at[folder,'SampleType'][0]+'.'+str(ext))
+				newID+'_'+namemap.at[folder,'Sample Type'][0]+'.'+str(ext))
 			os.rename(src,dst)
-	newID=namemap.at[folder,'CaseID']
+	newID=namemap.at[folder,'Case ID']
 	if ',' in newID :
 		newID=newID.split(',')[0]
 	src=os.path.join(filepath, folder)
-	dst=os.path.join(filepath, newID+'_'+namemap.at[folder,'SampleType'][0])
+	dst=os.path.join(filepath, newID+'_'+namemap.at[folder,'Sample Type'][0])
 	foldernew=os.rename(src, dst)
