@@ -34,7 +34,7 @@ for folder in os.listdir(filepath) : #loop through given path for sub-directorie
 						newID+'_'+namemap.at[folder,'Sample Type'][0]+'.'+str(ext))
 					if os.path.exists(dst) == True :
 						dst=os.path.join(filepath, folder, file, #new path to file
-						newID+'_'+namemap.at[folder,'Sample Type'][0]+'.'+str(ext)+str(2))
+						newID+'_'+namemap.at[folder,'Sample Type'][0]+str(2)+'.'+str(ext))
 					os.rename(src,dst) #rename function
 			else :
 				ext=file.split('.')[1:]
@@ -47,7 +47,7 @@ for folder in os.listdir(filepath) : #loop through given path for sub-directorie
 					newID+'_'+namemap.at[folder,'Sample Type'][0]+'.'+str(ext))
 				if os.path.exists(dst) == True :
 					dst=os.path.join(filepath, folder,
-					newID+'_'+namemap.at[folder,'Sample Type'][0]+'.'+str(ext)+str(2))
+					newID+'_'+namemap.at[folder,'Sample Type'][0]+str(2)+'.'+str(ext))
 				os.rename(src,dst)
 		newID=namemap.at[folder,'Case ID']
 		if ',' in newID :
