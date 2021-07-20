@@ -44,8 +44,8 @@ posgt10=0
 posgt5=0
 postot=0
 covlistall=[] #contains all read depths 1>=
-dp5array=np.array(['Sample','DepthFraction','MeanDepth','MedianDepth']) #blank np array
-dp10array=np.array(['Sample','DepthFraction','MeanDepth','MedianDepth']) #blank np array
+dp5array=np.array(['Sample','DepthFraction','MeanDepth','MedianDepth','MinimumDepth']) #blank np array
+dp10array=np.array(['Sample','DepthFraction','MeanDepth','MedianDepth','MinimumDepth']) #blank np array
 # for loop to go through .bam files
 for file in bamfiles:
 	sample=os.path.normpath(file)
@@ -74,9 +74,10 @@ for file in bamfiles:
 	depfr10=(round((posgt10temp/16569),4)) #depth fraction >10
 	meandep=(round((sum(covlist)/16569), 2)) #mean depth
 	meddep=(np.median(covlist)) #median depth
+	mindep=min(covlist) #min depth
 	#add to depth array
-	dp5array=np.vstack((dp5array,[sample[4],depfr5,meandep,meddep]))
-	dp10array=np.vstack((dp10array,[sample[4],depfr10,meandep,meddep]))
+	dp5array=np.vstack((dp5array,[sample[4],depfr5,meandep,meddep,mindep]))
+	dp10array=np.vstack((dp10array,[sample[4],depfr10,meandep,meddep,mindep]))
 	bamf.close() #close bam file
 
 ## save numpy array to outfile
